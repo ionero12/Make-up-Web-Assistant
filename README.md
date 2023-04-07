@@ -1,2 +1,2 @@
 # Make-up Web Assistant
- 
+ To create a Web application that offers - on the basis of its own REST/GraphQL API - privileged tips for making makeup according to age, complexion, occasion, time of day, etc. These tips/recommendations will be made based on specific products (e.g., creams, foundations, lipsticks, eyeliners,...) offered by various companies. User preferences will be taken into account. A ranking will also be generated - available in HTML, RSS and PDF formats - of the most popular products by age, gender, social position, locality and others.
