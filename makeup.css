@@ -95,12 +95,27 @@ header {
   margin: auto;
 }
 
-.products {
+#content {
   background-color: #d0c3c5;
   left: 16%;
   width: 83%;
   top: 20%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#content #tutoriale {
+  padding: 20px;
+}
+
+.videos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.videos iframe {
+  width: 45%;
+  height: 300px;
 }
 
 .container {
@@ -210,8 +225,18 @@ header {
   .left_menu {
     display: none;
   }
-  .products {
+  #content {
     width: 100%;
+  }
+  #content #tutoriale {
+    width: 95%;
+  }
+  .videos {
+    flex-direction: column;
+  }
+  .videos iframe {
+    width: 90%;
+    padding: 10px;
   }
   .container {
     flex-direction: column-reverse;
@@ -225,4 +250,4 @@ header {
     font-size: 22px;
     border-radius: 25px;
   }
-}/*# sourceMappingURL=general_products.css.map */
+}/*# sourceMappingURL=makeup.css.map */
