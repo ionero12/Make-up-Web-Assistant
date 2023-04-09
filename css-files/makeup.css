@@ -1,11 +1,6 @@
-/* *-------------------------------- */
 body {
   margin: 0;
   padding: 0;
-  background-color: #d0c3c5;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
 }
 
 .logo {
@@ -53,52 +48,70 @@ header {
   display: none;
 }
 
-* {
-  max-width: 100%;
+.left_menu {
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  left: 0;
+  top: 20%;
+  width: 16%;
+  background-color: #b88dab;
+  border-top: 2px white solid;
+  border-bottom: 2px white solid;
+  flex-direction: column;
+}
+.left_menu p {
+  color: white;
+  font-size: 20px;
+  margin-left: 5px;
+}
+.left_menu select {
+  width: 80%;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-family: "Asap", sans-serif;
+  color: #414b50;
+  font-size: 16px;
+  margin-left: 5px;
+}
+.left_menu select:focus {
+  outline: none;
+  font-family: "Asap", sans-serif;
 }
 
-.content {
+.sort_filter {
+  display: none;
+}
+
+#page {
+  display: flex;
+  justify-content: space-around;
   margin: auto;
-  width: 80%;
+}
+
+#content {
+  background: linear-gradient(to bottom, #e3d1dd, white);
+  left: 16%;
+  width: 83%;
+  top: 20%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#content #tutoriale {
   padding: 20px;
 }
 
-.first-text {
-  font-weight: bold;
-  font-size: 40px;
-}
-
-#introduction {
-  font-size: 18px;
+.videos {
   display: flex;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  border-radius: 25px;
-}
-
-.second-text {
-  max-width: 100%;
-  font-weight: bold;
-  font-size: 30px;
-}
-
-.model_style_1 {
-  display: flex;
-  justify-content: space-around;
   flex-direction: row;
-  border-radius: 25px;
+  justify-content: space-between;
 }
-.model_style_1 .second-photo {
-  max-width: 100%;
-  width: 60%;
-  border-radius: 25px;
-  border: 2px solid #967388;
-}
-.model_style_1 .text {
-  text-align: center;
-  align-self: center;
-  padding: 10px;
+.videos iframe {
+  width: 45%;
+  height: 300px;
 }
 
 .container {
@@ -107,24 +120,22 @@ header {
   flex-direction: row;
 }
 .container a {
-  width: 30%;
+  width: 20%;
   padding: 20px;
+  border-color: #967388;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px;
 }
 .container a img {
-  border: 2px solid #967388;
   border-radius: 25px;
-  max-height: 100%;
+  max-width: 100%;
 }
 .container p {
   text-align: center;
-  color: black;
+  color: #000d33;
   padding: 5px;
   text-decoration: none;
-}
-
-.bold {
-  font-weight: bold;
-  font-size: 20px;
 }
 
 .footer {
@@ -194,28 +205,39 @@ header {
   }
 }
 @media only screen and (max-width: 700px) {
-  #introduction {
-    font-size: 24px;
+  .sort_filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+    padding: 5px;
   }
-  .bold {
-    font-weight: bold;
-    font-size: 24px;
+  .sort_filter div {
+    border: 2px solid #967388;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 25px;
   }
-  .model_style_1 {
+  .left_menu {
+    display: none;
+  }
+  #content {
+    width: 100%;
+  }
+  #content #tutoriale {
+    width: 95%;
+  }
+  .videos {
     flex-direction: column;
   }
-  .model_style_1 .second-photo {
+  .videos iframe {
     width: 90%;
-    border: 2px solid #967388;
-    margin: auto;
-  }
-  .model_style_1 p {
-    font-size: 22px;
+    padding: 10px;
   }
   .container {
     flex-direction: column-reverse;
     margin: 50px 0;
-    width: 90%;
+    width: 100%;
     border-radius: 25px;
   }
   .container a {
@@ -224,4 +246,4 @@ header {
     font-size: 22px;
     border-radius: 25px;
   }
-}/*# sourceMappingURL=rutina_ta.css.map */
+}/*# sourceMappingURL=makeup.css.map */
