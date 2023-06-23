@@ -4,13 +4,29 @@ include "php/VideoRepository.php";
 $product = new ProductRepository();
 $video = new VideoRepository();
 $products = [];
+$products = $product->getProductsByBrands();
+$videos = [];
+$videos = $video->getVideosByOccasionArray("zi");
 
+if(isset($_POST['submit_zi'])){
+    $videos = $video->getVideosByOccasionArray("zi");
+}
+if(isset($_POST['submit_seara'])){
+    $videos = $video->getVideosByOccasionArray("seara");
+}
+if(isset($_POST['submit_eveniment'])){
+    $videos = $video->getVideosByOccasionArray("eveniment");
+}
+if(isset($_POST['submit_mireasa'])){
+    $videos = $video->getVideosByOccasionArray("mireasa");
+}
 if (isset($_POST['submit'])) {
     $products = $product->getProductsBySort();
 }
 if (isset($_POST['submit_sort'])) {
     $products = $product->getProductsByFilter();
 }
+
 
 ?>
 <!doctype html>
@@ -61,6 +77,7 @@ if (isset($_POST['submit_sort'])) {
         <select name="usage_type" id="usage_type">
             <!-- Options will be populated dynamically -->
         </select>
+
     </div>
 
     <div id="content">
@@ -68,101 +85,54 @@ if (isset($_POST['submit_sort'])) {
             <button class="button" id="filter">Filtreaza</button>
             <button class="button" id="sort">Sorteaza</button>
         </div>
-
+        <form action="makeup.php" method="POST">
+            <div class = "button_makup">
+                <input type="submit" class="button" value="Machiaj de zi" name="submit_zi">
+                <input type="submit" class="button" value="Machiaj de seara" name="submit_seara">
+                <input type="submit" class="button" value="Machiaj de eveniment" name="submit_eveniment">
+                <input type="submit" class="button" value="Machiaj de mireasa" name="submit_mireasa">
+            </div>
+        </form>
         <div id="carousel" class="carousel">
             <button id="prevBtn" class="carousel-btn prev-btn">&lt;</button>
             <div id="videosContainer" class="videos-container">
-                <iframe src="https://www.youtube.com/embed/sDErfOvnUfg" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/sDErfOvnUfg" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/sDErfOvnUfg" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/sDErfOvnUfg" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/sDErfOvnUfg" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/sDErfOvnUfg" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+                <?php
+                if ($videos != []) {
+                    foreach ($videos as $prod) {
+                        echo '<iframe src="'.$prod['link'].'" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                    }
+                }
+                ?>
             </div>
             <button id="nextBtn" class="carousel-btn next-btn">&gt;</button>
         </div>
-
-<!--        --><?php
-//        $occasion = "mireasa";
-//        $videos = $video->getVideosByOccasion($occasion);
-//        ?><!-- --><?php
-//        $occasion = "mireasa";
-//        $videos = $video->getVideosByOccasion($occasion);
-//        ?>
-<!---->
-<!--        <div id="carousel" class="carousel">-->
-<!--            <button id="prevBtn" class="carousel-btn prev-btn">&lt;</button>-->
-<!--            <div id="videosContainer" class="videos-container">-->
-<!--                --><?php //if (empty($videos)): ?>
-<!--                    <p>No videos available.</p>-->
-<!--                --><?php //else: ?>
-<!--                    --><?php //foreach ($videos as $video): ?>
-<!--                        <iframe src="--><?php //echo $video['link']; ?><!--" title="YouTube video player"-->
-<!--                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
-<!--                                allowfullscreen></iframe>-->
-<!--                    --><?php //endforeach; ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--            <button id="nextBtn" class="carousel-btn next-btn">&gt;</button>-->
-<!--        </div>-->
-
-<!--        --><?php
-//               $occasion = "mireasa";
-//                $videos = $video->getVideosByOccasion($occasion);
-//                ?><!-->-->
-<!--        <script>-->
-<!--            function createVideoElement(videos) {-->
-<!--                const videosContainer = document.getElementById('videosContainer');-->
-<!--                videosContainer.innerHTML = '';-->
-<!---->
-<!--                if (videos.length === 0) {-->
-<!--                    const message = document.createElement('p');-->
-<!--                    message.textContent = 'No videos available.';-->
-<!--                    videosContainer.appendChild(message);-->
-<!--                } else {-->
-<!--                    videos.forEach(video => {-->
-<!--                        // Create video iframe-->
-<!--                        const videoIframe = document.createElement('iframe');-->
-<!--                        videoIframe.src = video.link;-->
-<!--                        videoIframe.title = 'YouTube video player';-->
-<!--                        videoIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';-->
-<!--                        videoIframe.allowFullscreen = true;-->
-<!--                        videosContainer.appendChild(videoIframe);-->
-<!--                    });-->
-<!--                }-->
-<!--            }-->
-<!---->
-<!--        </script>-->
-
 
         <div class="products_phone" id="products_phone">
             <?php
             if ($products != []) {
                 foreach ($products as $prod) {
-                    echo '<div class="product">';
-                    echo '<a href="' . $prod['link'] . '">';
-                    echo '<img src="' . $prod['image_path'] . '" alt="' . $prod['description'] . '">';
-                    echo '<p>' . $prod['name'] . '</p>';
-                    echo '</a>';
-                    echo '</div>';
+                    if(isset($prod['name'])){
+                        echo '<div class="product">';
+                        echo '<a href="' . $prod['link'] . '">';
+                        echo '<img src="' . $prod['image_path'] . '" alt="' . $prod['description'] . '">';
+                        echo '<p>' . $prod['name'] . ' - ' . $prod['price'] . ' lei' . '</p>';
+                        echo '</a>';
+                        echo '</div>';
+                    }elseif(isset($prod['occasion'])){
+                        echo '<div class="product">';
+                        echo '<iframe width="400" height="315" src="'.$prod['link'].'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                        echo '</div>';
+                    }
+
                 }
             } else {
                 echo "<p>Nu exista produse pentru filtrele selectate!</p>";
             }
             ?>
         </div>
+        <!-- <div class="video_mobile">
+
+        </div> -->
 
         <div id="products" class="desktop_only">
             <!-- Products will be populated dynamically -->
@@ -170,79 +140,88 @@ if (isset($_POST['submit_sort'])) {
     </div>
 
     <div id="filterModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h1>Filtreaza Produsele</h1>
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1>Filtreaza Produsele</h1>
 
-            <p></p>
+                <p></p>
 
-            <form class="form-container" method="POST" action="makeup.php">
-                <select id="s1" name="select1" class="select_brands">
-                    <?php
-                    $brands = $product->getMakeUpBrands();
-                    foreach ($brands as $brand) {
-                        $id = $brand['brand_id'];
-                        $name = $brand['brand_name'];
-                        echo "<option value='$id'>$name</option>";
-                    }
-                    ?>
-                </select>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="checkbox1" name="checkboxGroup" value="checkbox1"
-                           onchange="toggleDiv('div1', this)">
-                    <label for="checkbox1">Ten</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="checkbox2" name="checkboxGroup" value="checkbox2"
-                           onchange="toggleDiv('div2', this)">
-                    <label for="checkbox2">Ochi</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="checkbox3" name="checkboxGroup" value="checkbox3"
-                           onchange="toggleDiv('div3', this)">
-                    <label for="checkbox3">Buze</label>
-                </div>
-                <div id="div1" class="hidden">
-
-                    <select id="select2" name="select2" class="select_ten">
+                <form class="form-container" method="POST" action="makeup.php">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox4" name="checkboxGroup" value="checkbox4" onchange="toggleDiv('div4', this)">
+                        <label for="checkbox4">Selecteaza tipul de tutorial de machiaj:</label>
+                    </div>
+                    <select id="s1" name="select1" class="select_brands">
                         <?php
-                        $usage_types = $product->getUsageTypeByProductType("ten");
-                        foreach ($usage_types as $usage_type) {
-                            $id_ten = $usage_type['id_type'];
-                            $name_ten = $usage_type['name_type'];
-                            echo "<option value='$id_ten'>$name_ten</option>";
+                        $brands = $product->getMakeUpBrands();
+                        foreach ($brands as $brand) {
+                            $id = $brand['brand_id'];
+                            $name = $brand['brand_name'];
+                            echo "<option value='$id'>$name</option>";
                         }
                         ?>
                     </select>
-                </div>
-                <div id="div2" class="hidden">
-                    <select name="select3" id="s3" class="select_ochii">
-                        <?php
-                        $usage_types = $product->getUsageTypeByProductType("ochi");
-                        foreach ($usage_types as $usage_type) {
-                            $id_ten = $usage_type['id_type'];
-                            $name_ten = $usage_type['name_type'];
-                            echo "<option value='$id_ten'>$name_ten</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div id="div3" class="hidden">
-                    <select name="select4" class="select_buze">
-                        <?php
-                        $usage_types = $product->getUsageTypeByProductType("buze");
-                        foreach ($usage_types as $usage_type) {
-                            $id_ten = $usage_type['id_type'];
-                            $name_ten = $usage_type['name_type'];
-                            echo "<option value='$id_ten'>$name_ten</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <input type="submit" class="button" value="Filtreaza" name="submit">
-            </form>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox1" name="checkboxGroup" value="checkbox1" onchange="toggleDiv('div1', this)">
+                        <label for="checkbox1">Ten</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox2" name="checkboxGroup" value="checkbox2" onchange="toggleDiv('div2', this)">
+                        <label for="checkbox2">Ochi</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox3" name="checkboxGroup" value="checkbox3" onchange="toggleDiv('div3', this)">
+                        <label for="checkbox3">Buze</label>
+                    </div>
+                    <div id="div4" class="hidden">
+                        <select id="select5" name="select5" class="select_video">
+                            <option value="zi">Machiaj de zi</option>
+                            <option value="eveniment">Machiaj de eveniment</option>
+                            <option value="mireasa">Machiaj de mireasa</option>
+                            <option value="seara">Machiaj de seara</option>
+                        </select>
+                    </div>
+                    <div id="div1" class="hidden">
+
+                        <select id="select2" name="select2" class="select_ten">
+                            <?php
+                            $usage_types = $product->getUsageTypeByProductType("ten");
+                            foreach ($usage_types as $usage_type) {
+                                $id_ten = $usage_type['id_type'];
+                                $name_ten = $usage_type['name_type'];
+                                echo "<option value='$id_ten'>$name_ten</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div id="div2" class="hidden">
+                        <select name="select3" id="s3" class="select_ochii">
+                            <?php
+                            $usage_types = $product->getUsageTypeByProductType("ochi");
+                            foreach ($usage_types as $usage_type) {
+                                $id_ten = $usage_type['id_type'];
+                                $name_ten = $usage_type['name_type'];
+                                echo "<option value='$id_ten'>$name_ten</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div id="div3" class="hidden">
+                        <select name="select4" id= "select4"class="select_buze">
+                            <?php
+                            $usage_types = $product->getUsageTypeByProductType("buze");
+                            foreach ($usage_types as $usage_type) {
+                                $id_ten = $usage_type['id_type'];
+                                $name_ten = $usage_type['name_type'];
+                                echo "<option value='$id_ten'>$name_ten</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <input type="submit" class="button" value="Filtreaza" name="submit">
+                </form>
+            </div>
         </div>
-    </div>
     <div id="sortModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -270,66 +249,69 @@ if (isset($_POST['submit_sort'])) {
     </div>
 </div>
 <script>
-    function toggleDiv(divId, checkbox) {
-        var div = document.getElementById(divId);
-        var checkboxes = document.getElementsByName("checkboxGroup");
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i] !== checkbox) {
+        function toggleDiv(divId, checkbox) {
+            var div = document.getElementById(divId);
+            var checkboxes = document.getElementsByName("checkboxGroup");
+
+            // Dezactivează celelalte casete de bifat și ascunde selecturile corespunzătoare
+            for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = false;
                 document.getElementById("div" + (i + 1)).classList.add('hidden');
             }
+
+            // Activează caseta de bifat curentă și afișează selectul corespunzător
+            checkbox.checked = true;
+            div.classList.remove('hidden');
         }
-        div.classList.toggle('hidden');
-    }
 
-    // Get the modal
-    var filterModal = document.getElementById("filterModal");
-    var sortModal = document.getElementById("sortModal");
 
-    // Get the button that opens the modals
-    var filterBtn = document.getElementById("filter");
-    var sortBtn = document.getElementById("sort");
+        // Get the modal
+        var filterModal = document.getElementById("filterModal");
+        var sortModal = document.getElementById("sortModal");
 
-    // Get the <span> elements that close the modals
-    var closeBtns = document.getElementsByClassName("close");
+        // Get the button that opens the modals
+        var filterBtn = document.getElementById("filter");
+        var sortBtn = document.getElementById("sort");
 
-    // Function to open a modal
-    function openModal(modal) {
-        modal.style.display = "block";
-    }
+        // Get the <span> elements that close the modals
+        var closeBtns = document.getElementsByClassName("close");
 
-    // Function to close a modal
-    function closeModal(modal) {
-        modal.style.display = "none";
-    }
+        // Function to open a modal
+        function openModal(modal) {
+            modal.style.display = "block";
+        }
 
-    // Event listener for opening the filter modal
-    filterBtn.onclick = function () {
-        openModal(filterModal);
-    };
+        // Function to close a modal
+        function closeModal(modal) {
+            modal.style.display = "none";
+        }
 
-    // Event listener for opening the sort modal
-    sortBtn.onclick = function () {
-        openModal(sortModal);
-    };
-
-    // Event listener for closing the modals
-    for (var i = 0; i < closeBtns.length; i++) {
-        closeBtns[i].onclick = function () {
-            closeModal(this.parentElement.parentElement);
+        // Event listener for opening the filter modal
+        filterBtn.onclick = function() {
+            openModal(filterModal);
         };
-    }
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == filterModal) {
-            closeModal(filterModal);
-        }
-        if (event.target == sortModal) {
-            closeModal(sortModal);
-        }
-    };
+        // Event listener for opening the sort modal
+        sortBtn.onclick = function() {
+            openModal(sortModal);
+        };
 
+        // Event listener for closing the modals
+        for (var i = 0; i < closeBtns.length; i++) {
+            closeBtns[i].onclick = function() {
+                closeModal(this.parentElement.parentElement);
+            };
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == filterModal) {
+                closeModal(filterModal);
+            }
+            if (event.target == sortModal) {
+                closeModal(sortModal);
+            }
+        };
 
     // Function to fetch data from an API
     function fetchData(url, propertyName) {
@@ -390,14 +372,21 @@ if (isset($_POST['submit_sort'])) {
                 productImage.classList.add('product-img');
                 productImage.src = product.image_path;
                 productImage.alt = product.name;
-                productImageLink.appendChild(productImage);
-                productContainer.appendChild(productImageLink);
 
-                // Create product name
                 const productName = document.createElement('p');
                 productName.classList.add('product-name');
                 productName.textContent = product.name + " - " + product.price + " lei"
-                productContainer.appendChild(productName);
+
+
+                productImageLink.appendChild(productImage);
+                productImageLink.appendChild(productName);
+                productContainer.appendChild(productImageLink);
+
+                // Create product name
+                // const productName = document.createElement('p');
+                // productName.classList.add('product-name');
+                // productName.textContent = product.name + " - " + product.price + " lei"
+                // productContainer.appendChild(productName);
 
                 // Append product container to the products container
                 productsContainer.appendChild(productContainer);
@@ -422,17 +411,17 @@ if (isset($_POST['submit_sort'])) {
         });
 
     // Event listener for brand change
-    document.getElementById('brand').addEventListener('change', function (event) {
+    document.getElementById('brand').addEventListener('change', function(event) {
         handleSelectChange(event, 'http://127.0.0.1:8000/api/find-products-by-brand-and-category.php?product_category=1&brand_name=', createProductElements);
     });
 
     // Event listener for product type change
-    document.getElementById('product_type').addEventListener('change', function (event) {
+    document.getElementById('product_type').addEventListener('change', function(event) {
         handleSelectChange(event, 'http://127.0.0.1:8000/api/find-makeup-products-by-type.php?type=', createProductElements);
     });
 
     // Event listener for usage type change
-    document.getElementById('usage_type').addEventListener('change', function (event) {
+    document.getElementById('usage_type').addEventListener('change', function(event) {
         handleSelectChange(event, 'http://127.0.0.1:8000/api/find-products-by-usage-type.php?product_category=1&usage_type=', createProductElements);
     });
 
@@ -473,7 +462,6 @@ if (isset($_POST['submit_sort'])) {
         }
         videosContainer.style.transform = `translateX(${currentPosition}px)`;
     });
-
 </script>
 
 </body>
